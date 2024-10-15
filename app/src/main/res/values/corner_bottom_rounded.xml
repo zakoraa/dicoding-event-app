@@ -1,0 +1,7 @@
+<resources>
+    <style name="ShapeAppearance.BottomRounded" parent="Widget.MaterialComponents.CardView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+    </style>
+</resources>

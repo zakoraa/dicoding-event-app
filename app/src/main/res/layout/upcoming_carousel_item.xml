@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.carousel.MaskableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
+    android:id="@+id/mfl_upcoming_carousel_item"
+    >
+
+    <ImageView
+        android:id="@+id/iv_upcoming_carousel_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/black_88"
+        android:contentDescription="@string/carousel_item_image_desc"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        />
+
+   <TextView
+       android:id="@+id/tv_upcoming_carousel_item"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:gravity="bottom"
+       android:layout_gravity="bottom"
+       android:background="@drawable/gradient_background"
+       android:textColor="@color/white"
+       android:padding="10dp"
+       android:maxLines="1"
+       android:ellipsize="end"
+       />
+
+</com.google.android.material.carousel.MaskableFrameLayout>
