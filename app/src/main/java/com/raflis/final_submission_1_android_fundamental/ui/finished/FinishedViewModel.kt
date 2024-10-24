@@ -3,9 +3,9 @@ package com.raflis.final_submission_1_android_fundamental.ui.finished
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.raflis.final_submission_1_android_fundamental.data.entity.Event
-import com.raflis.final_submission_1_android_fundamental.data.repository.remote.EventConfig
-import com.raflis.final_submission_1_android_fundamental.data.response.EventResponse
+import com.raflis.final_submission_1_android_fundamental.data.local.entity.Event
+import com.raflis.final_submission_1_android_fundamental.data.remote.retrofit.EventConfig
+import com.raflis.final_submission_1_android_fundamental.data.remote.response.EventResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

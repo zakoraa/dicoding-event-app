@@ -1,4 +1,4 @@
-package com.raflis.final_submission_1_android_fundamental.data.repository.remote
+package com.raflis.final_submission_1_android_fundamental.data.remote.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

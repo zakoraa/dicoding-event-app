@@ -1,4 +1,4 @@
-package com.raflis.final_submission_1_android_fundamental.data.entity
+package com.raflis.final_submission_1_android_fundamental.data.local.entity
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

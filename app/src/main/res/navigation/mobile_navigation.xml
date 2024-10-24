@@ -44,14 +44,23 @@
         tools:layout="@layout/fragment_event_details" >
         <argument
             android:name="event"
-            app:argType="com.raflis.final_submission_1_android_fundamental.data.entity.Event" />
+            app:argType="com.raflis.final_submission_1_android_fundamental.data.local.entity.Event"
+            app:nullable="true" />
+        <argument
+            android:name="favoriteEvent"
+            app:argType="com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent"
+            app:nullable="true" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.raflis.final_submission_1_android_fundamental.ui.favorite.FavoriteFragment"
         android:label="@string/favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_navigation_home_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_settings"

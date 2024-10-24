@@ -1,10 +1,10 @@
-package com.raflis.final_submission_1_android_fundamental.data.database
+package com.raflis.final_submission_1_android_fundamental.data.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.raflis.final_submission_1_android_fundamental.data.entity.FavoriteEvent
+import com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent
 
 @Database(entities = [FavoriteEvent::class], version = 1)
 abstract class FavoriteEventRoomDatabase : RoomDatabase() {

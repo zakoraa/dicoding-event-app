@@ -1,6 +1,6 @@
-package com.raflis.final_submission_1_android_fundamental.data.repository.remote
+package com.raflis.final_submission_1_android_fundamental.data.remote.retrofit
 
-import com.raflis.final_submission_1_android_fundamental.data.response.EventResponse
+import com.raflis.final_submission_1_android_fundamental.data.remote.response.EventResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

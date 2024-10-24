@@ -2,8 +2,8 @@ package com.raflis.final_submission_1_android_fundamental.ui.event_details
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.raflis.final_submission_1_android_fundamental.data.entity.FavoriteEvent
-import com.raflis.final_submission_1_android_fundamental.data.repository.local.FavoriteEventRepository
+import com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent
+import com.raflis.final_submission_1_android_fundamental.data.local.repository.FavoriteEventRepository
 
 class FavoriteEventAddDeleteViewModel(application: Application) : ViewModel() {
     private val mFavoriteEventRepository: FavoriteEventRepository =
@@ -20,4 +20,5 @@ class FavoriteEventAddDeleteViewModel(application: Application) : ViewModel() {
     fun delete(favoriteEvent: FavoriteEvent) {
         mFavoriteEventRepository.delete(favoriteEvent)
     }
+
 }

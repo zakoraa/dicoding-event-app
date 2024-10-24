@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.raflis.final_submission_1_android_fundamental.data.entity.Event
+import com.raflis.final_submission_1_android_fundamental.data.local.entity.Event
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentFinishedBinding
 import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.AdapterViewType
 import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.EventAdapter

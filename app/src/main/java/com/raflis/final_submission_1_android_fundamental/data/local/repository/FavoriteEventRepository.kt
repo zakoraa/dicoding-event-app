@@ -1,10 +1,10 @@
-package com.raflis.final_submission_1_android_fundamental.data.repository.local
+package com.raflis.final_submission_1_android_fundamental.data.local.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.raflis.final_submission_1_android_fundamental.data.database.FavoriteEventDao
-import com.raflis.final_submission_1_android_fundamental.data.database.FavoriteEventRoomDatabase
-import com.raflis.final_submission_1_android_fundamental.data.entity.FavoriteEvent
+import com.raflis.final_submission_1_android_fundamental.data.local.database.FavoriteEventDao
+import com.raflis.final_submission_1_android_fundamental.data.local.database.FavoriteEventRoomDatabase
+import com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

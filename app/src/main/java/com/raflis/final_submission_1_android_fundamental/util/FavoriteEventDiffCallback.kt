@@ -1,7 +1,7 @@
 package com.raflis.final_submission_1_android_fundamental.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.raflis.final_submission_1_android_fundamental.data.entity.FavoriteEvent
+import com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent
 
 class FavoriteEventDiffCallback(
     private val oldFavoriteEventList: List<FavoriteEvent>,
