@@ -12,9 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
-import com.raflis.final_submission_1_android_fundamental.data.model.EventModel
-import com.raflis.final_submission_1_android_fundamental.data.model.EventType
+import com.raflis.final_submission_1_android_fundamental.data.entity.Event
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentHomeBinding
+import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.AdapterViewType
 import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.EventAdapter
 
 
@@ -34,7 +34,28 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        binding.searchView.setupWithSearchBar(binding.searchBar)
+        with(binding) {
+            searchView.setupWithSearchBar(searchBar)
+
+            searchView.editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (!s.isNullOrEmpty()) {
+                        homeViewModel.searchEvents(s.toString())
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+            })
+        }
 
         homeViewModel.isGettingUpcomingEvent.observe(viewLifecycleOwner) {
             showUpcomingEventLoading(it)
@@ -56,20 +77,6 @@ class HomeFragment : Fragment() {
             setFinishedEventList(consumerFinishedEventlist)
         }
 
-        binding.searchView.editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty()) {
-                    homeViewModel.searchEvents(s.toString())
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-
         homeViewModel.searchResultEventList.observe(viewLifecycleOwner) { eventList ->
             setSearchResultEventList(eventList)
         }
@@ -86,36 +93,52 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun setUpcomingEventList(consumerUpcomingEventlist: List<EventModel?>?) {
+    private fun setUpcomingEventList(consumerUpcomingEventlist: List<Event?>?) {
 
         val adapter =
-            EventAdapter(consumerUpcomingEventlist ?: emptyList(), EventType.HOME_UPCOMING)
+            EventAdapter(
+                consumerUpcomingEventlist ?: emptyList(),
+                AdapterViewType.CAROUSEL_HORIZONTAL
+            )
 
-        binding.rvHomeUpcoming.adapter = adapter
-        binding.rvHomeUpcoming.setHasFixedSize(true)
-        binding.rvHomeUpcoming.layoutManager = CarouselLayoutManager()
-        CarouselSnapHelper().attachToRecyclerView(binding.rvHomeUpcoming)
+        with(binding) {
+            rvHomeUpcoming.adapter = adapter
+            rvHomeUpcoming.setHasFixedSize(true)
+            rvHomeUpcoming.layoutManager = CarouselLayoutManager()
+            CarouselSnapHelper().attachToRecyclerView(rvHomeUpcoming)
 
-        binding.tvNotUpcomingData.visibility = if (consumerUpcomingEventlist.isNullOrEmpty()) {
-            View.VISIBLE
-        } else {
-            View.GONE
+            tvNotUpcomingData.visibility = if (consumerUpcomingEventlist.isNullOrEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
+
     }
 
-    private fun setFinishedEventList(consumerFinishedEventlist: List<EventModel?>?) {
+    private fun setFinishedEventList(consumerFinishedEventlist: List<Event?>?) {
 
-        val adapter = EventAdapter(consumerFinishedEventlist ?: emptyList(), EventType.ALL)
+        val adapter = EventAdapter(
+            consumerFinishedEventlist ?: emptyList(),
+            AdapterViewType.LINEAR_LAYOUT_VERTICAL
+        )
 
-        binding.rvHomeFinished.adapter = adapter
-        binding.rvHomeFinished.setHasFixedSize(true)
-        binding.rvHomeFinished.layoutManager = LinearLayoutManager(requireContext())
+        with(binding) {
+            rvHomeFinished.adapter = adapter
+            rvHomeFinished.setHasFixedSize(true)
+            rvHomeFinished.setLayoutManager(object : LinearLayoutManager(requireContext()) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
+            })
 
-        binding.tvNotFinishedData.visibility = if (consumerFinishedEventlist.isNullOrEmpty()) {
-            View.VISIBLE
-        } else {
-            View.GONE
+            tvNotFinishedData.visibility = if (consumerFinishedEventlist.isNullOrEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
+
     }
 
     private fun showUpcomingEventLoading(isGettingUpcomingEvent: Boolean) {
@@ -132,12 +155,17 @@ class HomeFragment : Fragment() {
         binding.progressBarSearch.visibility = if (isSearching) View.VISIBLE else View.GONE
     }
 
-    private fun setSearchResultEventList(searchResult: List<EventModel?>?) {
-        val adapter = EventAdapter(searchResult ?: emptyList(), EventType.ALL)
-        binding.rvSearchResults.adapter = adapter
-        binding.rvSearchResults.setHasFixedSize(true)
-        binding.rvSearchResults.layoutManager = LinearLayoutManager(requireContext())
-        binding.tvNotFound.visibility =
-            if (searchResult.isNullOrEmpty()) View.VISIBLE else View.GONE
+    private fun setSearchResultEventList(searchResult: List<Event?>?) {
+        val adapter =
+            EventAdapter(searchResult ?: emptyList(), AdapterViewType.LINEAR_LAYOUT_VERTICAL)
+
+        with(binding) {
+            rvSearchResults.adapter = adapter
+            rvSearchResults.setHasFixedSize(true)
+            rvSearchResults.layoutManager = LinearLayoutManager(requireContext())
+            tvNotFound.visibility =
+                if (searchResult.isNullOrEmpty()) View.VISIBLE else View.GONE
+        }
+
     }
 }

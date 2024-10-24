@@ -24,7 +24,19 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/event_details" />
+        android:text="@string/event_details"
+        tools:ignore="RelativeOverlap" />
+
+    <ImageView
+        android:id="@+id/iv_favorite_event_details"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:contentDescription="@string/favorite"
+        android:src="@drawable/ic_favorite"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -67,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="15dp"
-                app:layout_constraintEnd_toEndOf="@id/mcv_image_event_detail"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mcv_image_event_detail" />
 

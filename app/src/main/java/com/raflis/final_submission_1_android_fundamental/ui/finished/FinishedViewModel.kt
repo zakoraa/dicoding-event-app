@@ -3,7 +3,7 @@ package com.raflis.final_submission_1_android_fundamental.ui.finished
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.raflis.final_submission_1_android_fundamental.data.model.EventModel
+import com.raflis.final_submission_1_android_fundamental.data.entity.Event
 import com.raflis.final_submission_1_android_fundamental.data.repository.remote.EventConfig
 import com.raflis.final_submission_1_android_fundamental.data.response.EventResponse
 import retrofit2.Call
@@ -18,8 +18,8 @@ class FinishedViewModel : ViewModel() {
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> = _toastMessage
 
-    private val _finishedEventList = MutableLiveData<List<EventModel?>?>()
-    val finishedEventList: LiveData<List<EventModel?>?> =_finishedEventList
+    private val _finishedEventList = MutableLiveData<List<Event?>?>()
+    val finishedEventList: LiveData<List<Event?>?> =_finishedEventList
 
 
     init {

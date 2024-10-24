@@ -32,36 +32,38 @@ class EventDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val event = EventDetailsFragmentArgs.fromBundle(arguments as Bundle).event
 
-        Glide.with(requireContext())
-            .load(event.imageLogo)
-            .into(binding.ivImageEventDetail)
-        binding.tvOwnerEventDetails.text = event.ownerName
+        with(binding) {
+            Glide.with(requireContext())
+                .load(event.imageLogo)
+                .into(ivImageEventDetail)
+            tvOwnerEventDetails.text = event.ownerName
 
-        binding.tvNameEventDetails.text = event.name
-        val beginTimeFormatted = event.beginTime?.let {
-            DateFormatter.inputFormat.parse(it)
-                ?.let { it1 -> DateFormatter.outputDateFormat.format(it1) } +
-                    "\n" + DateFormatter.inputFormat.parse(it)
-                ?.let { it1 -> DateFormatter.outputTimeFormat.format(it1) }
-        } ?: "00:00 WIB"
+            tvNameEventDetails.text = event.name
+            val beginTimeFormatted = event.beginTime?.let {
+                DateFormatter.inputFormat.parse(it)
+                    ?.let { it1 -> DateFormatter.outputDateFormat.format(it1) } +
+                        "\n" + DateFormatter.inputFormat.parse(it)
+                    ?.let { it1 -> DateFormatter.outputTimeFormat.format(it1) }
+            } ?: "00:00 WIB"
 
-        binding.tvTimeEventDetails.text = beginTimeFormatted
+            tvTimeEventDetails.text = beginTimeFormatted
 
-        binding.tvRemainingQuotaDataEventDetails.text =
-            ((event.quota ?: 0) - (event.registrants ?: 0)).toString()
+            tvRemainingQuotaDataEventDetails.text =
+                ((event.quota ?: 0) - (event.registrants ?: 0)).toString()
 
-        binding.tvDescEventDetails.text =  Html.fromHtml(event.description?.trimIndent() ?: "halo", Html.FROM_HTML_MODE_COMPACT)
+            tvDescEventDetails.text =  Html.fromHtml(event.description?.trimIndent() ?: "", Html.FROM_HTML_MODE_COMPACT)
 
-        binding.ivBackEventDetails.setOnClickListener {
-            findNavController().navigateUp()
+            ivBackEventDetails.setOnClickListener {
+                findNavController().navigateUp()
+            }
+
+            btnRegisterEventDetails.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(event.link)
+                startActivity(intent)
+            }
+
         }
-
-        binding.btnRegisterEventDetails.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(event.link)
-            startActivity(intent)
-        }
-
 
     }
 

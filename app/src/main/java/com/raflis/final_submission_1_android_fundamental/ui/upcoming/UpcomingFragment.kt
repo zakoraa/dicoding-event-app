@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.raflis.final_submission_1_android_fundamental.data.model.EventModel
-import com.raflis.final_submission_1_android_fundamental.data.model.EventType
+import com.raflis.final_submission_1_android_fundamental.data.entity.Event
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentUpcomingBinding
+import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.AdapterViewType
 import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.EventAdapter
 
 class UpcomingFragment : Fragment() {
@@ -49,18 +49,23 @@ class UpcomingFragment : Fragment() {
         _binding = null
     }
 
-    private fun setUpcomingEventList(consumerUpcomingEventlist: List<EventModel?>?) {
+    private fun setUpcomingEventList(consumerUpcomingEventlist: List<Event?>?) {
 
-        val adapter = EventAdapter(consumerUpcomingEventlist ?: emptyList(), EventType.ALL)
+        val adapter = EventAdapter(
+            consumerUpcomingEventlist ?: emptyList(),
+            AdapterViewType.LINEAR_LAYOUT_VERTICAL
+        )
 
-        binding.rvUpcoming.adapter = adapter
-        binding.rvUpcoming.setHasFixedSize(true)
-        binding.rvUpcoming.layoutManager = LinearLayoutManager(requireContext())
+        with(binding) {
+            rvUpcoming.adapter = adapter
+            rvUpcoming.setHasFixedSize(true)
+            rvUpcoming.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.tvNotUpcomingData.visibility = if (consumerUpcomingEventlist.isNullOrEmpty()) {
-            View.VISIBLE
-        } else {
-            View.GONE
+            tvNotUpcomingData.visibility = if (consumerUpcomingEventlist.isNullOrEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 

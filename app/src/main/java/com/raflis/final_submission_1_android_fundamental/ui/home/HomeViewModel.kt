@@ -3,7 +3,7 @@ package com.raflis.final_submission_1_android_fundamental.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.raflis.final_submission_1_android_fundamental.data.model.EventModel
+import com.raflis.final_submission_1_android_fundamental.data.entity.Event
 import com.raflis.final_submission_1_android_fundamental.data.repository.remote.EventConfig
 import com.raflis.final_submission_1_android_fundamental.data.response.EventResponse
 import retrofit2.Call
@@ -24,14 +24,14 @@ class HomeViewModel : ViewModel() {
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> = _toastMessage
 
-    private val _upcomingEventList = MutableLiveData<List<EventModel?>?>()
-    val upcomingEventList: LiveData<List<EventModel?>?> = _upcomingEventList
+    private val _upcomingEventList = MutableLiveData<List<Event?>?>()
+    val upcomingEventList: LiveData<List<Event?>?> = _upcomingEventList
 
-    private val _finishedEventList = MutableLiveData<List<EventModel?>?>()
-    val finishedEventList: LiveData<List<EventModel?>?> = _finishedEventList
+    private val _finishedEventList = MutableLiveData<List<Event?>?>()
+    val finishedEventList: LiveData<List<Event?>?> = _finishedEventList
 
-    private val _searchResultEventList = MutableLiveData<List<EventModel?>?>()
-    val searchResultEventList: LiveData<List<EventModel?>?> = _searchResultEventList
+    private val _searchResultEventList = MutableLiveData<List<Event?>?>()
+    val searchResultEventList: LiveData<List<Event?>?> = _searchResultEventList
 
     init {
         getUpcomingEvents()

@@ -16,9 +16,13 @@
     <string name="detail_image">Detail Image</string>
     <string name="arrow_back_icon">Arrow Back Icon</string>
     <string name="event_details">Event Details</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="remaining_quota">Remaining quota:</string>
     <string name="register">Register</string>
     <string name="no_data">No Data</string>
+    <string name="favorite">Favorite</string>
+    <string name="settings">Settings</string>
+    <string name="favorite_title">Favorite Events</string>
+    <string name="favorite_desc">Jelajahi event-event favorite Anda</string>
 </resources>

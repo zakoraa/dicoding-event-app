@@ -1,11 +1,14 @@
-package com.raflis.final_submission_1_android_fundamental.data.model
+package com.raflis.final_submission_1_android_fundamental.data.entity
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class EventModel(
+data class Event(
+    @field:SerializedName("id")
+    val id: Int? = null,
+
     @field:SerializedName("summary")
     val summary: String? = null,
 
@@ -35,9 +38,6 @@ data class EventModel(
 
     @field:SerializedName("name")
     val name: String? = null,
-
-    @field:SerializedName("id")
-    val id: Int? = null,
 
     @field:SerializedName("beginTime")
     val beginTime: String? = null,

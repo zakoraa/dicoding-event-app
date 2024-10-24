@@ -44,7 +44,19 @@
         tools:layout="@layout/fragment_event_details" >
         <argument
             android:name="event"
-            app:argType="com.raflis.final_submission_1_android_fundamental.data.model.EventModel" />
+            app:argType="com.raflis.final_submission_1_android_fundamental.data.entity.Event" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.raflis.final_submission_1_android_fundamental.ui.favorite.FavoriteFragment"
+        android:label="@string/favorite"
+        tools:layout="@layout/fragment_favorite" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.raflis.final_submission_1_android_fundamental.ui.settings.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings"/>
 
 </navigation>

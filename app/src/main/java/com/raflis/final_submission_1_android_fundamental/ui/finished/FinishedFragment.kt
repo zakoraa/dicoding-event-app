@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.raflis.final_submission_1_android_fundamental.data.model.EventModel
-import com.raflis.final_submission_1_android_fundamental.data.model.EventType
+import com.raflis.final_submission_1_android_fundamental.data.entity.Event
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentFinishedBinding
+import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.AdapterViewType
 import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.EventAdapter
 
 class FinishedFragment : Fragment() {
@@ -49,19 +49,22 @@ class FinishedFragment : Fragment() {
         _binding = null
     }
 
-    private fun setFinishedEventList(consumerFinishedEventlist: List<EventModel?>?) {
+    private fun setFinishedEventList(consumerFinishedEventlist: List<Event?>?) {
 
-        val adapter = EventAdapter(consumerFinishedEventlist ?: emptyList(), EventType.ALL)
+        val adapter = EventAdapter(consumerFinishedEventlist ?: emptyList(), AdapterViewType.LINEAR_LAYOUT_VERTICAL)
 
-        binding.rvFinished.adapter = adapter
-        binding.rvFinished.setHasFixedSize(true)
-        binding.rvFinished.layoutManager = LinearLayoutManager(requireContext())
+        with(binding) {
+            rvFinished.adapter = adapter
+            rvFinished.setHasFixedSize(true)
+            rvFinished.layoutManager = LinearLayoutManager(requireContext())
 
-        binding.tvNotFinishedData.visibility = if (consumerFinishedEventlist.isNullOrEmpty()) {
-            View.VISIBLE
-        } else {
-            View.GONE
+            tvNotFinishedData.visibility = if (consumerFinishedEventlist.isNullOrEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
+
     }
 
     private fun showLoading(isLoading: Boolean) {
