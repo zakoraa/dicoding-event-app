@@ -3,14 +3,11 @@ package com.raflis.final_submission_1_android_fundamental.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.raflis.final_submission_1_android_fundamental.data.ResultStatus
 import com.raflis.final_submission_1_android_fundamental.data.local.entity.Event
-import com.raflis.final_submission_1_android_fundamental.data.remote.retrofit.EventConfig
-import com.raflis.final_submission_1_android_fundamental.data.remote.response.EventResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.raflis.final_submission_1_android_fundamental.data.remote.repository.EventRepository
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val eventRepository: EventRepository) : ViewModel() {
 
     private val _isGettingUpcomingEvent = MutableLiveData<Boolean>().apply { value = true }
     val isGettingUpcomingEvent: LiveData<Boolean> = _isGettingUpcomingEvent
@@ -24,14 +21,14 @@ class HomeViewModel : ViewModel() {
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> = _toastMessage
 
-    private val _upcomingEventList = MutableLiveData<List<Event?>?>()
-    val upcomingEventList: LiveData<List<Event?>?> = _upcomingEventList
+    private val _upcomingEventList = MutableLiveData<List<Event>>()
+    val upcomingEventList: LiveData<List<Event>> = _upcomingEventList
 
-    private val _finishedEventList = MutableLiveData<List<Event?>?>()
-    val finishedEventList: LiveData<List<Event?>?> = _finishedEventList
+    private val _finishedEventList = MutableLiveData<List<Event>>()
+    val finishedEventList: LiveData<List<Event>> = _finishedEventList
 
-    private val _searchResultEventList = MutableLiveData<List<Event?>?>()
-    val searchResultEventList: LiveData<List<Event?>?> = _searchResultEventList
+    private val _searchResultEventList = MutableLiveData<List<Event>>()
+    val searchResultEventList: LiveData<List<Event>> = _searchResultEventList
 
     init {
         getUpcomingEvents()
@@ -44,28 +41,21 @@ class HomeViewModel : ViewModel() {
             return
         }
 
-        val upcomingEventListData = EventConfig.getApiService().getUpcomingEvents()
-        upcomingEventListData.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-
-                if (response.isSuccessful) {
-                    _upcomingEventList.value =
-                        response.body()?.listEvents?.take(5) ?: emptyList()
-                } else {
-                    _upcomingEventList.value = emptyList()
-                    _toastMessage.value = "Failed to get upcoming events"
+        eventRepository.getUpcomingEvents().observeForever { result ->
+            when (result) {
+                is ResultStatus.Loading -> _isGettingUpcomingEvent.value = true
+                is ResultStatus.Success -> {
+                    _upcomingEventList.value = result.data.take(5)
+                    _isGettingUpcomingEvent.value = false
                 }
-                _isGettingUpcomingEvent.value = false
+
+                is ResultStatus.Error -> {
+                    _upcomingEventList.value = emptyList()
+                    _toastMessage.value = result.error
+                    _isGettingUpcomingEvent.value = false
+                }
             }
-
-            override fun onFailure(call: Call<EventResponse>, response: Throwable) {
-                _upcomingEventList.value = emptyList()
-                _toastMessage.value = "Failed to get upcoming events"
-                _isGettingUpcomingEvent.value = false
-            }
-
-        })
-
+        }
     }
 
     private fun getFinishedEvents() {
@@ -74,54 +64,45 @@ class HomeViewModel : ViewModel() {
             return
         }
 
-        val finishedEventListData = EventConfig.getApiService().getFinishedEvents()
-        finishedEventListData.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-
-                if (response.isSuccessful) {
-                    _finishedEventList.value =
-                        response.body()?.listEvents?.take(5) ?: emptyList()
-                } else {
-                    _finishedEventList.value = emptyList()
-                    _toastMessage.value = "Failed to get finished events"
+        eventRepository.getFinishedEvents().observeForever { result ->
+            when (result) {
+                is ResultStatus.Loading -> _isGettingFinishedEvent.value = true
+                is ResultStatus.Success -> {
+                    _finishedEventList.value = result.data.take(5)
+                    _isGettingFinishedEvent.value = false
                 }
-                _isGettingFinishedEvent.value = false
-            }
 
-            override fun onFailure(call: Call<EventResponse>, response: Throwable) {
-                _finishedEventList.value = emptyList()
-                _isGettingFinishedEvent.value = false
-                _toastMessage.value = "Failed to get finished events"
+                is ResultStatus.Error -> {
+                    _finishedEventList.value = emptyList()
+                    _toastMessage.value = result.error
+                    _isGettingFinishedEvent.value = false
+                }
             }
-
-        })
+        }
     }
 
     fun searchEvents(keyword: String) {
-        if (keyword.isEmpty() || keyword == "") {
+        if (keyword.isEmpty()) {
             _searchResultEventList.value = emptyList()
             return
         }
         _isSearchingEvents.value = true
 
-        val searchResultEventListData = EventConfig.getApiService().searchEvents(keyword)
-        searchResultEventListData.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                _isSearchingEvents.value = false
+        eventRepository.searchEvents(keyword).observeForever { result ->
+            _isSearchingEvents.value = false
+            when (result) {
+                is ResultStatus.Loading -> {}
+                is ResultStatus.Success -> {
+                    _searchResultEventList.value = result.data
+                }
 
-                if (response.isSuccessful) {
-                    _searchResultEventList.value = response.body()?.listEvents ?: emptyList()
-                } else {
-                    _toastMessage.value = "Failed to get events"
+                is ResultStatus.Error -> {
+                    _searchResultEventList.value = emptyList()
+                    _toastMessage.value = result.error
                 }
             }
-
-            override fun onFailure(call: Call<EventResponse>, response: Throwable) {
-                _isSearchingEvents.value = false
-                _toastMessage.value = "Failed to get events"
-            }
-
-        })
+        }
     }
+
 
 }

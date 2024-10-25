@@ -1,10 +1,11 @@
-package com.raflis.final_submission_1_android_fundamental.ui.settings
+package com.raflis.final_submission_1_android_fundamental
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.raflis.final_submission_1_android_fundamental.data.local.database.SettingPreferences
+import com.raflis.final_submission_1_android_fundamental.ui.settings.SettingsViewModel
 
-class SettingsViewModelFactory(private val pref: SettingPreferences) :
+class MainViewModelFactory(private val pref: SettingPreferences) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")

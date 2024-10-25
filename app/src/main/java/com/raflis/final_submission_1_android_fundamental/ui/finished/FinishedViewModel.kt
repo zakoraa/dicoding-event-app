@@ -3,14 +3,11 @@ package com.raflis.final_submission_1_android_fundamental.ui.finished
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.raflis.final_submission_1_android_fundamental.data.ResultStatus
 import com.raflis.final_submission_1_android_fundamental.data.local.entity.Event
-import com.raflis.final_submission_1_android_fundamental.data.remote.retrofit.EventConfig
-import com.raflis.final_submission_1_android_fundamental.data.remote.response.EventResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.raflis.final_submission_1_android_fundamental.data.remote.repository.EventRepository
 
-class FinishedViewModel : ViewModel() {
+class FinishedViewModel(private val eventRepository: EventRepository) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>().apply { value = false }
     val isLoading: LiveData<Boolean> = _isLoading
@@ -18,39 +15,33 @@ class FinishedViewModel : ViewModel() {
     private val _toastMessage = MutableLiveData<String?>()
     val toastMessage: LiveData<String?> = _toastMessage
 
-    private val _finishedEventList = MutableLiveData<List<Event?>?>()
-    val finishedEventList: LiveData<List<Event?>?> =_finishedEventList
-
+    private val _finishedEventList = MutableLiveData<List<Event>>()
+    val finishedEventList: LiveData<List<Event>> = _finishedEventList
 
     init {
         getFinishedEvents()
     }
 
-    private  fun getFinishedEvents() {
+    private fun getFinishedEvents() {
         if (_finishedEventList.value != null && _finishedEventList.value!!.isNotEmpty()) {
             _isLoading.value = false
             return
         }
         _isLoading.value = true
 
-        val finishedEventListData = EventConfig.getApiService().getFinishedEvents()
-        finishedEventListData.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                if (response.isSuccessful) {
-                    _finishedEventList.value = response.body()?.listEvents?: emptyList()
-                } else {
-                    _finishedEventList.value = emptyList()
-                    _toastMessage.value = "Failed to get finished events"
+        eventRepository.getFinishedEvents().observeForever { result ->
+            when (result) {
+                is ResultStatus.Loading -> _isLoading.value = true
+                is ResultStatus.Success -> {
+                    _finishedEventList.value = result.data
+                    _isLoading.value = false
                 }
-                _isLoading.value = false
+                is ResultStatus.Error -> {
+                    _finishedEventList.value = emptyList()
+                    _toastMessage.value = result.error
+                    _isLoading.value = false
+                }
             }
-
-            override fun onFailure(call: Call<EventResponse>, response: Throwable) {
-                _finishedEventList.value = emptyList()
-                _isLoading.value = false
-                _toastMessage.value = "Failed to get finished events"
-            }
-
-        })
+        }
     }
 }

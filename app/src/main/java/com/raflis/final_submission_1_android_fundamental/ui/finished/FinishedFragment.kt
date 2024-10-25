@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raflis.final_submission_1_android_fundamental.data.local.entity.Event
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentFinishedBinding
 import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.AdapterViewType
 import com.raflis.final_submission_1_android_fundamental.ui.common.adapter.EventAdapter
+import com.raflis.final_submission_1_android_fundamental.ui.common.view_model.EventViewModelFactory
 
 class FinishedFragment : Fragment() {
 
@@ -23,8 +24,10 @@ class FinishedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val finishedViewModel =
-            ViewModelProvider(this)[FinishedViewModel::class.java]
+        val factory: EventViewModelFactory = EventViewModelFactory.getInstance(requireActivity())
+        val finishedViewModel: FinishedViewModel by viewModels {
+            factory
+        }
 
         _binding = FragmentFinishedBinding.inflate(inflater, container, false)
         val root: View = binding.root

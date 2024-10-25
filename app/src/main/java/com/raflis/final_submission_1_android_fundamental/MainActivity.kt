@@ -13,7 +13,6 @@ import com.raflis.final_submission_1_android_fundamental.data.local.database.Set
 import com.raflis.final_submission_1_android_fundamental.data.local.database.dataStore
 import com.raflis.final_submission_1_android_fundamental.databinding.ActivityMainBinding
 import com.raflis.final_submission_1_android_fundamental.ui.settings.SettingsViewModel
-import com.raflis.final_submission_1_android_fundamental.ui.settings.SettingsViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,13 +22,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val pref = SettingPreferences.getInstance(this.application.dataStore)
-        val settingsViewModel = ViewModelProvider(
+        val mainViewModel = ViewModelProvider(
             this,
-            SettingsViewModelFactory(pref)
+            MainViewModelFactory(pref)
         )[SettingsViewModel::class.java]
 
 
-        settingsViewModel.getThemeSettings()
+        mainViewModel.getThemeSettings()
             .observe(this@MainActivity) { isDarkModeActive: Boolean ->
                 if (isDarkModeActive) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentFavoriteBinding
-import com.raflis.final_submission_1_android_fundamental.ui.common.view_model.EventViewModelFactory
+import com.raflis.final_submission_1_android_fundamental.ui.common.view_model.FavoriteEventViewModelFactory
 import com.raflis.final_submission_1_android_fundamental.ui.event_details.FavoriteEventAdapter
 
 class FavoriteFragment : Fragment() {
@@ -64,7 +64,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun obtainViewModel(): FavoriteViewModel {
-        val factory = EventViewModelFactory.getInstance(requireActivity().application)
+        val factory = FavoriteEventViewModelFactory.getInstance(requireActivity().application)
         return ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
     }
 

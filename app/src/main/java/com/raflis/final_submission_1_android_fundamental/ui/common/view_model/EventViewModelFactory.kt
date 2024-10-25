@@ -1,37 +1,34 @@
 package com.raflis.final_submission_1_android_fundamental.ui.common.view_model
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.raflis.final_submission_1_android_fundamental.ui.event_details.FavoriteEventAddDeleteViewModel
-import com.raflis.final_submission_1_android_fundamental.ui.favorite.FavoriteViewModel
+import com.raflis.final_submission_1_android_fundamental.data.di.Injection
+import com.raflis.final_submission_1_android_fundamental.data.remote.repository.EventRepository
+import com.raflis.final_submission_1_android_fundamental.ui.finished.FinishedViewModel
+import com.raflis.final_submission_1_android_fundamental.ui.home.HomeViewModel
+import com.raflis.final_submission_1_android_fundamental.ui.upcoming.UpcomingViewModel
 
-class EventViewModelFactory private constructor(
-    private val mApplication: Application,
-) :
+class EventViewModelFactory private constructor(private val eventRepository: EventRepository) :
     ViewModelProvider.NewInstanceFactory() {
-    companion object {
-        @Volatile
-        private var INSTANCE: EventViewModelFactory? = null
-
-        @JvmStatic
-        fun getInstance(application: Application): EventViewModelFactory {
-            if (INSTANCE == null) {
-                synchronized(EventViewModelFactory::class.java) {
-                    INSTANCE = EventViewModelFactory(application)
-                }
-            }
-            return INSTANCE as EventViewModelFactory
-        }
-    }
-
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
-            return FavoriteViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(FavoriteEventAddDeleteViewModel::class.java)) {
-            return FavoriteEventAddDeleteViewModel(mApplication) as T
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(eventRepository) as T
+        } else if (modelClass.isAssignableFrom(FinishedViewModel::class.java)) {
+            return FinishedViewModel(eventRepository) as T
+        } else if (modelClass.isAssignableFrom(UpcomingViewModel::class.java)) {
+            return UpcomingViewModel(eventRepository) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+        throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
+    }
+
+    companion object {
+        @Volatile
+        private var instance: EventViewModelFactory? = null
+        fun getInstance(context: Context): EventViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: EventViewModelFactory(Injection.provideRepository(context))
+            }.also { instance = it }
     }
 }
