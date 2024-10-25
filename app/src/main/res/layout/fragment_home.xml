@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:hint="@string/search_hint"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="@color/card_background"
             app:layout_anchor="@id/search_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentEventDetailsBinding
-import com.raflis.final_submission_1_android_fundamental.ui.common.view_model.ViewModelFactory
+import com.raflis.final_submission_1_android_fundamental.ui.common.view_model.EventViewModelFactory
 import com.raflis.final_submission_1_android_fundamental.util.DateUtil
 
 class EventDetailsFragment : Fragment() {
@@ -180,7 +180,7 @@ class EventDetailsFragment : Fragment() {
     }
 
     private fun obtainViewModel(): FavoriteEventAddDeleteViewModel {
-        val factory = ViewModelFactory.getInstance(requireActivity().application)
+        val factory = EventViewModelFactory.getInstance(requireActivity().application)
         return ViewModelProvider(this, factory)[FavoriteEventAddDeleteViewModel::class.java]
     }
 

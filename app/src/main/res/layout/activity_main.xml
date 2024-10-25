@@ -24,7 +24,7 @@
         app:cardCornerRadius="60dp"
         android:layout_marginBottom="12dp"
         android:layout_marginHorizontal="15dp"
-        app:strokeColor="@color/black_88"
+        app:strokeColor="@color/card_stroke"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -33,7 +33,7 @@
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:background="@color/white"
+            android:background="@color/card_background"
             app:itemIconTint="@color/color_item_bot_nav"
             app:itemTextColor="@color/color_item_bot_nav"
             app:itemActiveIndicatorStyle="@android:color/transparent"

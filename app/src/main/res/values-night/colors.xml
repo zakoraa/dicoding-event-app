@@ -8,6 +8,6 @@
     <color name="gray">#808080</color>
     <color name="gray_bb">#BBBBBB</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="card_background">#FFFFFFFF</color>
-    <color name="card_stroke">#20111111</color>
+    <color name="card_background">#FF000000</color>
+    <color name="card_stroke">#808080</color>
 </resources>

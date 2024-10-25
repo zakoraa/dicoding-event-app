@@ -48,7 +48,8 @@
                 android:text="@string/enable_dark_mode"
                 android:textColor="@color/gray"/>
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/sm_dark_mode"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +76,8 @@
                 android:text="@string/enable_notification"
                 android:textColor="@color/gray"/>
 
-            <androidx.appcompat.widget.SwitchCompat
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/sm_daily_reminder"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 app:layout_constraintEnd_toEndOf="parent"

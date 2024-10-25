@@ -6,20 +6,22 @@ import androidx.lifecycle.ViewModelProvider
 import com.raflis.final_submission_1_android_fundamental.ui.event_details.FavoriteEventAddDeleteViewModel
 import com.raflis.final_submission_1_android_fundamental.ui.favorite.FavoriteViewModel
 
-class ViewModelFactory private constructor(private val mApplication: Application) :
+class EventViewModelFactory private constructor(
+    private val mApplication: Application,
+) :
     ViewModelProvider.NewInstanceFactory() {
     companion object {
         @Volatile
-        private var INSTANCE: ViewModelFactory? = null
+        private var INSTANCE: EventViewModelFactory? = null
 
         @JvmStatic
-        fun getInstance(application: Application): ViewModelFactory {
+        fun getInstance(application: Application): EventViewModelFactory {
             if (INSTANCE == null) {
-                synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(application)
+                synchronized(EventViewModelFactory::class.java) {
+                    INSTANCE = EventViewModelFactory(application)
                 }
             }
-            return INSTANCE as ViewModelFactory
+            return INSTANCE as EventViewModelFactory
         }
     }
 
