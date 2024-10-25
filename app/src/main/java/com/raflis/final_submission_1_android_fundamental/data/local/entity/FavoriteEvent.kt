@@ -52,6 +52,4 @@ data class FavoriteEvent(
     @ColumnInfo(name = "category")
     var category: String? = null,
 
-    @ColumnInfo(name = "createdAt")
-    var createdAt: String? = null
 ) : Parcelable

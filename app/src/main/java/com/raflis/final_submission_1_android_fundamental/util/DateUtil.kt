@@ -38,9 +38,4 @@ object DateUtil {
                 calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)
     }
 
-    fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
-        val date = Date()
-        return dateFormat.format(date)
-    }
 }

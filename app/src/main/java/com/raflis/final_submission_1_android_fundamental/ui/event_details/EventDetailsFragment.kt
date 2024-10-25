@@ -77,6 +77,11 @@ class EventDetailsFragment : Fragment() {
                     startActivity(intent)
                 }
 
+                favoriteEventAddDeleteViewModel.isFavoriteEvent(event.id)
+                    .observe(viewLifecycleOwner) { isFavorite ->
+                        ivFavoriteEventDetails.isSelected = isFavorite
+                    }
+
                 ivFavoriteEventDetails.setOnClickListener {
                     val newFavoriteEvent = FavoriteEvent(
                         id = event.id,
@@ -93,10 +98,9 @@ class EventDetailsFragment : Fragment() {
                         beginTime = event.beginTime,
                         endTime = event.endTime,
                         category = event.category,
-                        createdAt = DateUtil.getCurrentDate()
                     )
 
-                    favoriteEventAddDeleteViewModel.insert(newFavoriteEvent)
+                    favoriteEventAddDeleteViewModel.toggleFavoriteEvent(newFavoriteEvent)
                 }
 
             }
@@ -140,6 +144,11 @@ class EventDetailsFragment : Fragment() {
                     startActivity(intent)
                 }
 
+                favoriteEventAddDeleteViewModel.isFavoriteEvent(favoriteEvent.id)
+                    .observe(viewLifecycleOwner) { isFavorite ->
+                        ivFavoriteEventDetails.isSelected = isFavorite
+                    }
+
                 ivFavoriteEventDetails.setOnClickListener {
                     val newFavoriteEvent = FavoriteEvent(
                         id = favoriteEvent.id,
@@ -156,10 +165,9 @@ class EventDetailsFragment : Fragment() {
                         beginTime = favoriteEvent.beginTime,
                         endTime = favoriteEvent.endTime,
                         category = favoriteEvent.category,
-                        createdAt = DateUtil.getCurrentDate()
                     )
 
-                    favoriteEventAddDeleteViewModel.insert(newFavoriteEvent)
+                    favoriteEventAddDeleteViewModel.toggleFavoriteEvent(newFavoriteEvent)
                 }
             }
         }

@@ -20,6 +20,9 @@ class FavoriteEventRepository(application: Application) {
     fun getAllFavoriteEvents(): LiveData<List<FavoriteEvent>> =
         mFavoriteEventsDao.getAllFavoriteEvents()
 
+    fun getFavoriteEventById(id: Int?): LiveData<FavoriteEvent> =
+        mFavoriteEventsDao.getFavoriteEventById(id)
+
     fun insert(favoriteEvent: FavoriteEvent) {
         executorService.execute { mFavoriteEventsDao.insert(favoriteEvent) }
     }
@@ -28,7 +31,4 @@ class FavoriteEventRepository(application: Application) {
         executorService.execute { mFavoriteEventsDao.delete(favoriteEvent) }
     }
 
-    fun update(favoriteEvent: FavoriteEvent) {
-        executorService.execute { mFavoriteEventsDao.update(favoriteEvent) }
-    }
 }
