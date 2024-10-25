@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.raflis.final_submission_1_android_fundamental.data.local.entity.FavoriteEvent
 import com.raflis.final_submission_1_android_fundamental.databinding.FragmentFavoriteBinding
 import com.raflis.final_submission_1_android_fundamental.ui.common.view_model.ViewModelFactory
 import com.raflis.final_submission_1_android_fundamental.ui.event_details.FavoriteEventAdapter
@@ -15,15 +16,26 @@ class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: FavoriteEventAdapter
+    private lateinit var favoriteViewModel: FavoriteViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        favoriteViewModel = obtainViewModel()
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
 
+        favoriteViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        favoriteViewModel.favoriteEvents.observe(viewLifecycleOwner) { favoriteEventList ->
+            observeFavoriteEvents(favoriteEventList)
+        }
+
         setupRecyclerView()
-        observeFavoriteEvents()
+
+        favoriteViewModel.loadFavoriteEvents()
 
         return binding.root
     }
@@ -40,20 +52,22 @@ class FavoriteFragment : Fragment() {
         binding.rvFavorite.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun observeFavoriteEvents() {
-        val favoriteViewModel = obtainViewModel()
-        favoriteViewModel.getAllFavoriteEvents().observe(viewLifecycleOwner) { favoriteEventList ->
-            adapter.setListFavoriteEvents(favoriteEventList ?: emptyList())
-            binding.tvNotFavoriteData.visibility = if (favoriteEventList.isNullOrEmpty()) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+    private fun observeFavoriteEvents(favoriteEventList: List<FavoriteEvent>?) {
+        adapter.setListFavoriteEvents(favoriteEventList ?: emptyList())
+        binding.tvNotFavoriteData.visibility = if (favoriteEventList.isNullOrEmpty()) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
+
     }
 
     private fun obtainViewModel(): FavoriteViewModel {
         val factory = ViewModelFactory.getInstance(requireActivity().application)
         return ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBarFavorite.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
