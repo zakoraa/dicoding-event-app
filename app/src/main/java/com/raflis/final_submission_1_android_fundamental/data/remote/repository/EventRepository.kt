@@ -15,7 +15,7 @@ class EventRepository private constructor(
 ) {
 
     fun getUpcomingEvents(): LiveData<ResultStatus<List<Event>>> {
-     val upcomingEventResult = MediatorLiveData<ResultStatus<List<Event>>>()
+        val upcomingEventResult = MediatorLiveData<ResultStatus<List<Event>>>()
         upcomingEventResult.value = ResultStatus.Loading
         val client = eventService.getUpcomingEvents()
         client.enqueue(object : Callback<EventResponse> {
@@ -57,6 +57,7 @@ class EventRepository private constructor(
 
         return finishedEventResult
     }
+
 
     fun searchEvents(keyword: String): LiveData<ResultStatus<List<Event>>> {
         val searchResult = MediatorLiveData<ResultStatus<List<Event>>>()

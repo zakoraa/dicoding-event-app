@@ -12,6 +12,9 @@ interface EventService {
     @GET("events?active=0")
     fun getFinishedEvents(): Call<EventResponse>
 
+    @GET("events?active=-1&limit=1")
+    fun getLatestEvent(): Call<EventResponse>
+
     @GET("events?active=-1")
     fun searchEvents(@Query("q") keyword: String): Call<EventResponse>
 }

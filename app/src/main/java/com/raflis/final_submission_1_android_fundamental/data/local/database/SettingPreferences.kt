@@ -25,8 +25,21 @@ class SettingPreferences private constructor(private val dataStore: DataStore<Pr
         }
     }
 
+    fun getDailyReminderSetting(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[DAILY_REMINDER_KEY] ?: false
+        }
+    }
+
+    suspend fun saveDailyReminderSetting(isEnabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[DAILY_REMINDER_KEY] = isEnabled
+        }
+    }
+
     companion object {
         private val THEME_KEY = booleanPreferencesKey("theme_setting")
+        private val DAILY_REMINDER_KEY = booleanPreferencesKey("daily_reminder_setting")
         @Volatile
         private var INSTANCE: SettingPreferences? = null
 
