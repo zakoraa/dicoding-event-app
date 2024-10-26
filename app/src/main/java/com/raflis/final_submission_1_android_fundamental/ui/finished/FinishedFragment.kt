@@ -24,7 +24,7 @@ class FinishedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val factory: EventViewModelFactory = EventViewModelFactory.getInstance(requireActivity())
+        val factory: EventViewModelFactory = EventViewModelFactory.getInstance()
         val finishedViewModel: FinishedViewModel by viewModels {
             factory
         }

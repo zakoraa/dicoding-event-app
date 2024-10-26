@@ -1,6 +1,5 @@
 package com.raflis.final_submission_1_android_fundamental.ui.common.view_model
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.raflis.final_submission_1_android_fundamental.data.di.Injection
@@ -26,9 +25,9 @@ class EventViewModelFactory private constructor(private val eventRepository: Eve
     companion object {
         @Volatile
         private var instance: EventViewModelFactory? = null
-        fun getInstance(context: Context): EventViewModelFactory =
+        fun getInstance(): EventViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: EventViewModelFactory(Injection.provideRepository(context))
+                instance ?: EventViewModelFactory(Injection.provideRepository())
             }.also { instance = it }
     }
 }

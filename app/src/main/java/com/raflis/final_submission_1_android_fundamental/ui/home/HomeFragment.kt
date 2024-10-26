@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val factory: EventViewModelFactory = EventViewModelFactory.getInstance(requireActivity())
+        val factory: EventViewModelFactory = EventViewModelFactory.getInstance()
         val homeViewModel: HomeViewModel by viewModels {
             factory
         }

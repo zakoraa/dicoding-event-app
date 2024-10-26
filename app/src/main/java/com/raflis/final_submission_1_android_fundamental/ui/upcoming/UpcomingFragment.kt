@@ -24,7 +24,7 @@ class UpcomingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val factory: EventViewModelFactory = EventViewModelFactory.getInstance(requireActivity())
+        val factory: EventViewModelFactory = EventViewModelFactory.getInstance()
         val upcomingViewModel: UpcomingViewModel by viewModels {
             factory
         }
